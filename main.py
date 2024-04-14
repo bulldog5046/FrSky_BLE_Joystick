@@ -1,10 +1,9 @@
-from bleak import BleakClient, BleakScanner, BLEDevice
+from bleak import BleakClient
 from bleak import BleakGATTCharacteristic
 import asyncio
 import binascii
 import vgamepad as vg
 import datetime
-import struct
 
 CHANNEL_COUNT = 8
 PPM_MIN = 980
@@ -70,8 +69,6 @@ def parsePPMChannelData(data: bytearray):
     return channels
 
 async def onUpdate(sender: BleakGATTCharacteristic, data: bytearray):
-    log_data(data)
-    
     if not hasBoundaryMarkers(data):
         print("Data does not have boundary markers.")
         return
